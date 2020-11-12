@@ -18,6 +18,9 @@ function SignIn() {
         {
           provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         },
+        {
+          provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        },
       ],
       callbacks: {
         signInSuccessWithAuthResult: (authResult) => {
