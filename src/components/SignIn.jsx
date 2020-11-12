@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
 import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
+import { signUpAction } from '../store/actions/actions';
 
 function SignIn() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const ui =
       firebaseui.auth.AuthUI.getInstance() ??
@@ -16,7 +20,11 @@ function SignIn() {
         },
       ],
       callbacks: {
-        signInSuccessWithAuthResult: () => false,
+        signInSuccessWithAuthResult: (authResult) => {
+          if (authResult.additionalUserInfo.isNewUser)
+            dispatch(signUpAction(authResult.user));
+          return false;
+        },
       },
     });
   }, []);
