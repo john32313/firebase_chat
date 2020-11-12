@@ -8,8 +8,8 @@ export const signUpAction = (user) => async (dispatch) => {
     displayName,
     photoURL,
     conversationsList: null,
-    statut: true,
-    mail: email,
+    isOnline: true,
+    email,
   });
 
   dispatch({
@@ -20,15 +20,22 @@ export const signUpAction = (user) => async (dispatch) => {
 
 export const signInAction = (user) => async (dispatch) => {
   const { displayName, photoURL, email, uid } = user;
-  await firebase.database().ref(`/users/${user.uid}/statut`).set(true);
+
   dispatch({
     type: AUTH_SIGN_IN,
     user: { displayName, photoURL, email, uid },
   });
+
+  await firebase.database().ref(`/users/${user.uid}/isOnline`).set(true);
+  await firebase
+    .database()
+    .ref(`/users/${user.uid}/isOnline`)
+    .onDisconnect()
+    .set(false);
 };
 
 export const signOutAction = (user) => async (dispatch) => {
-  await firebase.database().ref(`/users/${user.uid}/statut`).set(false);
+  await firebase.database().ref(`/users/${user.uid}/isOnline`).set(false);
   await firebase.auth().signOut();
 
   dispatch({
