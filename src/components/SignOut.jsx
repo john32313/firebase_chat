@@ -7,6 +7,7 @@ function SignOut() {
   const user = useSelector((state) => state.auth.user);
   return (
     <button
+      className="bg-gray-700 text-white text-bold rounded p-2"
       type="button"
       onClick={() => {
         dispatch(signOutAction(user));
