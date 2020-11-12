@@ -5,7 +5,10 @@ import 'firebaseui/dist/firebaseui.css';
 
 function SignIn() {
   useEffect(() => {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
+    const ui =
+      firebaseui.auth.AuthUI.getInstance() ??
+      new firebaseui.auth.AuthUI(firebase.auth());
+
     ui.start('#firebaseui-auth-container', {
       signInOptions: [
         {
@@ -13,7 +16,7 @@ function SignIn() {
         },
       ],
       callbacks: {
-        signInSuccess: () => false,
+        signInSuccessWithAuthResult: () => false,
       },
     });
   }, []);
