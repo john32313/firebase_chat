@@ -11,6 +11,7 @@ dependencies:
   react-router-dom: 5.2.0_react@17.0.1
   react-scripts: 4.0.0
   redux: 4.0.5
+  redux-thunk: 2.3.0
 devDependencies:
   '@babel/core': 7.12.3
   '@babel/eslint-parser': 7.12.1_@babel+core@7.12.3+eslint@7.13.0
@@ -10500,6 +10501,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
+  /redux-thunk/2.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
   /redux/4.0.5:
     dependencies:
       loose-envify: 1.4.0
@@ -12968,3 +12973,4 @@ specifiers:
   react-router-dom: ^5.2.0
   react-scripts: 4.0.0
   redux: ^4.0.5
+  redux-thunk: ^2.3.0
