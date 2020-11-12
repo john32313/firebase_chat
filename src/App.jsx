@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
+import SignIn from './components/SignIn';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>React starter template</h1>
-      </header>
-    </div>
+    <main className="App">
+      <SignIn />
+    </main>
   );
 }
 
