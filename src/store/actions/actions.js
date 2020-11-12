@@ -4,7 +4,7 @@ import { AUTH_SIGN_IN, AUTH_SIGN_OUT } from './actionTypes';
 export const signUpAction = (user) => async (dispatch) => {
   const { displayName, photoURL, email, uid } = user;
 
-  await firebase.database().ref(`/users/${user.uid}`).set({
+  await firebase.database().ref(`/users/${uid}`).set({
     displayName,
     photoURL,
     conversationsList: null,
@@ -26,7 +26,7 @@ export const signInAction = (user) => async (dispatch) => {
     user: { displayName, photoURL, email, uid },
   });
 
-  await firebase.database().ref(`/users/${user.uid}/isOnline`).set(true);
+  await firebase.database().ref(`/users/${uid}/isOnline`).set(true);
   await firebase
     .database()
     .ref(`/users/${user.uid}/isOnline`)
