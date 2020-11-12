@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOutAction } from '../store/actions/actions';
+import { signOutAction } from '../store/actions';
 import { userSelector } from '../store/selectors';
 
 function SignOut() {

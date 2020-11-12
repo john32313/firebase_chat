@@ -9,7 +9,7 @@ const getContactsAction = (currentUser) => (dispatch) => {
     .database()
     .ref(`users`)
     .on('value', (snapshot) => {
-      const contacts = Object.entries(snapshot.val()).reduce((acc, cur, i) => {
+      const contacts = Object.entries(snapshot.val()).reduce((acc, cur) => {
         if (uid === cur[0]) return acc;
         return [...acc, { uid: cur[0], ...cur[1] }];
       }, []);

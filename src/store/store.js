@@ -2,8 +2,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import firebase from 'firebase/app';
 import reducers from './reducers/reducers';
-import { signInAction } from './actions/actions';
-import { getContactsAction } from './actions/contactsActions';
+import { signInAction } from './actions';
 
 const store = createStore(
   reducers,
@@ -16,7 +15,6 @@ const store = createStore(
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(signInAction(user));
-    store.dispatch(getContactsAction(user));
   }
 });
 
