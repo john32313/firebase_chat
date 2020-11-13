@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   subscribeContactsAction,
+  unsubscribeContactsAction,
   subscribeConversationsList,
 } from '../store/actions';
 import { userSelector } from '../store/selectors';
@@ -15,8 +16,12 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    dispatch(subscribeContactsAction(user));
+    dispatch(subscribeContactsAction());
     dispatch(subscribeConversationsList(user));
+
+    return () => {
+      dispatch(unsubscribeContactsAction());
+    };
   }, []);
 
   return (

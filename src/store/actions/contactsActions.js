@@ -1,24 +1,46 @@
 /* eslint-disable no-unused-vars */
 import firebase from 'firebase/app';
-import { SUBSCRIBE_CONTACTS } from './actionTypes';
+import {
+  UPDATE_CONTACTS,
+  SUBSCRIBE_CONTACTS,
+  UNSUBSCRIBE_CONTACTS,
+} from './actionTypes';
 
-const subscribeContactsAction = (currentUser) => (dispatch) => {
-  const { uid } = currentUser;
+const subscribeContactsAction = () => (dispatch, getState) => {
+  const { uid } = getState().user;
+  const { subscriber } = getState().contacts;
 
-  firebase
+  if (subscriber !== null) return;
+
+  const contactSubscriber = firebase
     .database()
-    .ref(`users`)
+    .ref('users')
     .on('value', (snapshot) => {
       const contacts = Object.entries(snapshot.val()).reduce((acc, cur) => {
         if (uid === cur[0]) return acc;
         return [...acc, { uid: cur[0], ...cur[1] }];
       }, []);
+
       dispatch({
-        type: SUBSCRIBE_CONTACTS,
+        type: UPDATE_CONTACTS,
         payload: contacts,
       });
     });
+
+  dispatch({
+    type: SUBSCRIBE_CONTACTS,
+    payload: contactSubscriber,
+  });
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { subscribeContactsAction };
+const unsubscribeContactsAction = () => (dispatch, getState) => {
+  const { subscriber } = getState().contacts;
+
+  firebase.database().ref('users').off('value', subscriber);
+
+  dispatch({
+    type: UNSUBSCRIBE_CONTACTS,
+  });
+};
+
+export { subscribeContactsAction, unsubscribeContactsAction };
