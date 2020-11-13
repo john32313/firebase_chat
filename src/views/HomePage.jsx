@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getContactsAction,
-  getConversationsListAction,
+  subscribeContactsAction,
+  subscribeConversationsList,
 } from '../store/actions';
 import { userSelector } from '../store/selectors';
 
@@ -15,8 +15,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    dispatch(getContactsAction(user));
-    dispatch(getConversationsListAction(user));
+    dispatch(subscribeContactsAction(user));
+    dispatch(subscribeConversationsList(user));
   }, []);
 
   return (

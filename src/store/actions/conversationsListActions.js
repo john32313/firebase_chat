@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
-import { GET_CONVERSATIONS_LIST } from './actionTypes';
+import { SUBSCRIBE_CONVERSATIONS_LIST } from './actionTypes';
 
-const getConversationsListAction = (currentUser) => (dispatch) => {
+const subscribeConversationsList = (currentUser) => (dispatch) => {
   const { uid } = currentUser;
 
   firebase
@@ -14,11 +14,11 @@ const getConversationsListAction = (currentUser) => (dispatch) => {
         [],
       );
       dispatch({
-        type: GET_CONVERSATIONS_LIST,
+        type: SUBSCRIBE_CONVERSATIONS_LIST,
         payload: conversationsList,
       });
     });
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { getConversationsListAction };
+export { subscribeConversationsList };

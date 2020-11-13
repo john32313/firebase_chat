@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import firebase from 'firebase/app';
-import { GET_CONTACTS } from './actionTypes';
+import { SUBSCRIBE_CONTACTS } from './actionTypes';
 
-const getContactsAction = (currentUser) => (dispatch) => {
+const subscribeContactsAction = (currentUser) => (dispatch) => {
   const { uid } = currentUser;
 
   firebase
@@ -14,11 +14,11 @@ const getContactsAction = (currentUser) => (dispatch) => {
         return [...acc, { uid: cur[0], ...cur[1] }];
       }, []);
       dispatch({
-        type: GET_CONTACTS,
+        type: SUBSCRIBE_CONTACTS,
         payload: contacts,
       });
     });
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { getContactsAction };
+export { subscribeContactsAction };

@@ -1,10 +1,10 @@
-import { getContactsAction } from './contactsActions';
-import { getConversationsListAction } from './conversationsListActions';
+import { subscribeContactsAction } from './contactsActions';
+import { subscribeConversationsList } from './conversationsListActions';
 import { signUpAction, signInAction, signOutAction } from './userActions';
 
 export {
-  getContactsAction,
-  getConversationsListAction,
+  subscribeContactsAction,
+  subscribeConversationsList,
   signUpAction,
   signInAction,
   signOutAction,
