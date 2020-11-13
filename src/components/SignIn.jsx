@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
 import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
-import { signUpAction } from '../store/actions/actions';
+import { signUpAction } from '../store/actions';
 
 function SignIn() {
   const dispatch = useDispatch();

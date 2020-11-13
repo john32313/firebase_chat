@@ -1,0 +1,72 @@
+{
+  // ecouteur sur tous les users pour avoir la liste de contact
+  "users": {
+    "uid_1": {
+      "name": "",
+      "mail": "",
+      "avatar": ""
+    },
+    "uid_2": {
+      "name": "",
+      "mail": "",
+      "avatar": ""
+    }
+  },
+
+  // ecouteur uniquement sur le current user pour avoir la liste de ses convesations
+  "conversationsList": {
+    "vA8ci1HqjjPREh9VhKG5jDUohgj2": {
+      "uidconv1": {
+        "userList": [
+          "9NbBc6U8wqe2w1zwTeVTVoIQM5s1",
+          "L2BtK2BRPXTdpabk6iG9sEGPHvq2"
+        ],
+        "unread": 12
+      },
+      "uidconv2": {
+        "userList": [
+          "x96kiiQ87RSwux1mi0eoGTwegwY2",
+          "9NbBc6U8wqe2w1zwTeVTVoIQM5s1"
+        ],
+        "unread": 3
+      }
+    },
+    "9NbBc6U8wqe2w1zwTeVTVoIQM5s1": {
+      "uidconv1": {}
+    }
+  },
+
+  //ecouteur uniquement sur la conversation ouverte/active
+  "conversations": {
+    "uidconv1": {
+      "userList": ["uid_1", "uid_2", "uid_3"],
+      "messages": {
+        "0": {
+          "text": "salut",
+          "time": 123478,
+          "exp": "uid_1"
+        },
+        "1": {
+          "text": "ça va",
+          "time": 123478,
+          "exp": "uid_2"
+        }
+      }
+    },
+    "uidconv2": {
+      "userList": ["uid_1", "uid_2"],
+      "messages": {
+        "0": {
+          "text": "salut",
+          "time": 123478,
+          "exp": "uid_1"
+        },
+        "1": {
+          "text": "ça va",
+          "time": 123478,
+          "exp": "uid_2"
+        }
+      }
+    }
+  }
+}

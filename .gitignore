@@ -27,3 +27,6 @@ yarn.lock
 package-lock.json
 
 src/css/dist.css
+
+# firebase
+.firebase

@@ -1,4 +1,10 @@
 import { combineReducers } from 'redux';
-import authReducer from './authReducer';
+import userReducer from './userReducer';
+import contactsReducer from './contactsReducer';
+import conversationListReducers from './conversationsListReducer';
 
-export default combineReducers({ auth: authReducer });
+export default combineReducers({
+  user: userReducer,
+  contacts: contactsReducer,
+  conversationsList: conversationListReducers,
+});
