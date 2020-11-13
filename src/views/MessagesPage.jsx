@@ -38,7 +38,7 @@ function ContactList() {
         const contact = contacts.find((c) => c.uid === contactUid);
 
         return (
-          <li key={contact.uid}>
+          <li key={convo.uid_conv}>
             <Contact
               name={contact.displayName}
               image={contact.photoURL}

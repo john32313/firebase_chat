@@ -1,10 +1,14 @@
 import firebase from 'firebase/app';
-import { SUBSCRIBE_CONVERSATIONS_LIST } from './actionTypes';
+import {
+  SUBSCRIBE_CONVERSATIONS_LIST,
+  UPDATE_CONVERSATIONS_LIST,
+  UNSUBSCRIBE_CONVERSATIONS_LIST,
+} from './actionTypes';
 
 const subscribeConversationsList = () => (dispatch, getState) => {
   const { uid } = getState().user;
 
-  firebase
+  const conversionListSubscriber = firebase
     .database()
     .ref(`conversationsList/${uid}`)
     .on('value', (snapshot) => {
@@ -15,11 +19,26 @@ const subscribeConversationsList = () => (dispatch, getState) => {
         [],
       );
       dispatch({
-        type: SUBSCRIBE_CONVERSATIONS_LIST,
+        type: UPDATE_CONVERSATIONS_LIST,
         payload: conversationsList,
       });
     });
+
+  dispatch({
+    type: SUBSCRIBE_CONVERSATIONS_LIST,
+    payload: conversionListSubscriber,
+  });
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { subscribeConversationsList };
+const unsubscribeConversationsList = () => (dispatch, getState) => {
+  const { subscriber } = getState().conversationsList;
+  const { uid } = getState().user;
+
+  firebase.database().ref(`conversationsList/${uid}`).off('value', subscriber);
+
+  dispatch({
+    type: UNSUBSCRIBE_CONVERSATIONS_LIST,
+  });
+};
+
+export { subscribeConversationsList, unsubscribeConversationsList };

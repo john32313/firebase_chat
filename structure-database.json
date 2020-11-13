@@ -31,8 +31,21 @@
         "unread": 3
       }
     },
-    "9NbBc6U8wqe2w1zwTeVTVoIQM5s1": {
-      "uidconv1": {}
+    "x96kiiQ87RSwux1mi0eoGTwegwY2": {
+      "uidconv3": {
+        "userList": [
+          "9NbBc6U8wqe2w1zwTeVTVoIQM5s1",
+          "L2BtK2BRPXTdpabk6iG9sEGPHvq2"
+        ],
+        "unread": 12
+      },
+      "uidconv4": {
+        "userList": [
+          "vA8ci1HqjjPREh9VhKG5jDUohgj2",
+          "9NbBc6U8wqe2w1zwTeVTVoIQM5s1"
+        ],
+        "unread": 3
+      }
     }
   },
 

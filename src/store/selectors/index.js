@@ -3,7 +3,7 @@ const userSelector = (state) => state.user;
 
 const contactsSelector = (state) => state.contacts.contacts;
 
-const conversationsListSelector = (state) => state.conversationsList;
+const conversationsListSelector = (state) => state.conversationsList.convList;
 
 export {
   isAuthSelector,
