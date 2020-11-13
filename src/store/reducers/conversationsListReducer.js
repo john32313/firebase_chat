@@ -3,10 +3,10 @@ import {
   AUTH_SIGN_OUT,
 } from '../actions/actionTypes';
 
-const conversationsListReducer = (state = {}, action) => {
+const conversationsListReducer = (state = [], action) => {
   switch (action.type) {
     case SUBSCRIBE_CONVERSATIONS_LIST:
-      return { ...action.payload };
+      return [...action.payload];
     case AUTH_SIGN_OUT:
       return {};
     default:

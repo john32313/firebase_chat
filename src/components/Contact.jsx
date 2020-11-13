@@ -15,7 +15,7 @@ function Contact({ name, image, unreadCount, isOnline, link }) {
           />
         </div>
 
-        <div className="flex mt-2">
+        <div className="flex justify-between w-full mt-2">
           <h1 className="font-bold text-xl mx-2">{name}</h1>
 
           {unreadCount > 0 && (
