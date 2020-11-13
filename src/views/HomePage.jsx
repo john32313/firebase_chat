@@ -9,6 +9,8 @@ import {
 } from '../store/actions';
 import { userSelector } from '../store/selectors';
 
+// a transformer en async
+// eslint-disable-next-line no-unused-vars
 const createConversation = (userList) => {
   const db = firebase.database();
   const newConvRef = db.ref('conversations').push();
@@ -32,6 +34,16 @@ const createConversation = (userList) => {
   return uidConv;
 };
 
+/* eslint-disable no-unused-vars */
+const createMessage = (uidConv, uidUser, msg) => {
+  const timestamp = firebase.database.ServerValue.TIMESTAMP;
+  firebase.database().ref(`conversations/${uidConv}/messages`).push().set({
+    text: msg,
+    exp: uidUser,
+    time: timestamp,
+  });
+};
+
 const HomePage = () => {
   const user = useSelector(userSelector);
   const dispatch = useDispatch();
@@ -39,12 +51,14 @@ const HomePage = () => {
   const handleClick = () => {
     console.log('Test : ');
 
-    const userList = [
-      user.uid,
-      '9NbBc6U8wqe2w1zwTeVTVoIQM5s1',
-      'x96kiiQ87RSwux1mi0eoGTwegwY2',
-    ];
-    createConversation(userList);
+    // const userList = [
+    //   user.uid,
+    //   '9NbBc6U8wqe2w1zwTeVTVoIQM5s1',
+    //   'x96kiiQ87RSwux1mi0eoGTwegwY2',
+    // ];
+    // const uidConv = createConversation(userList);
+    const msg = 'first message !';
+    createMessage('-MM0G2I0u2Vzm6uuXYlj', user.uid, msg);
   };
 
   useEffect(() => {
