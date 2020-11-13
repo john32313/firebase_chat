@@ -4,13 +4,8 @@ import firebase from 'firebase/app';
 import reducers from './reducers/reducers';
 import { signInAction } from './actions';
 
-const store = createStore(
-  reducers,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : (f) => f,
-  ),
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
