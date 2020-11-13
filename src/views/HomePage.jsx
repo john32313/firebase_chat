@@ -4,6 +4,7 @@ import {
   subscribeContactsAction,
   unsubscribeContactsAction,
   subscribeConversationsList,
+  unsubscribeConversationsList,
 } from '../store/actions';
 import { userSelector } from '../store/selectors';
 
@@ -21,6 +22,7 @@ const HomePage = () => {
 
     return () => {
       dispatch(unsubscribeContactsAction());
+      dispatch(unsubscribeConversationsList());
     };
   }, []);
 
