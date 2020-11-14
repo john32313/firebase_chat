@@ -11,7 +11,6 @@ import { allUsersSelector } from '../store/selectors';
  * retourne la conversation
  */
 
-// ecouteur separé:  messages et userlist
 const useSubscribeConversation = (uidConvToShow = 'uidconv4') => {
   const allUsers = useSelector(allUsersSelector);
   const [conversation, setConversation] = useState([]);
@@ -21,18 +20,24 @@ const useSubscribeConversation = (uidConvToShow = 'uidconv4') => {
   useEffect(() => {
     firebase
       .database()
-      .ref(`conversations/${uidConvToShow}`)
+      .ref(`conversations/${uidConvToShow}/messages`)
       .on('value', (snapshot) => {
-        const result = Object.entries(snapshot.val());
-        const convUnorderer = result[0][1];
-        const timeRangeByOrder = Object.keys(convUnorderer).sort();
-        setConversation(timeRangeByOrder.map((time) => convUnorderer[time]));
-        setUserList(result[1][1]);
+        const result = snapshot.val();
+        const timeRangeByOrder = Object.keys(result).sort();
+        setConversation(timeRangeByOrder.map((time) => result[time]));
       });
   }, []);
 
   useEffect(() => {
-    console.log('here');
+    firebase
+      .database()
+      .ref(`conversations/${uidConvToShow}/userList`)
+      .on('value', (snapshot) => {
+        setUserList(snapshot.val());
+      });
+  }, []);
+
+  useEffect(() => {
     setUserListObject(
       userList.reduce((acc, curr) => ({ ...acc, [curr]: allUsers[curr] }), {}),
     );

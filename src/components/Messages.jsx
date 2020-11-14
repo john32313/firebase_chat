@@ -23,7 +23,6 @@ function Messages() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newMsg || !newMsg.trim()) return;
-    console.log('newMsg :>> ', newMsg);
     createMessage(convoUid, user.uid, newMsg);
     setNewMsg('');
   };
