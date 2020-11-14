@@ -11,7 +11,7 @@ import {
 } from '../store/actions';
 
 // maybe rename this page/component ?
-function MessagesPage() {
+function HomePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,4 +34,4 @@ function MessagesPage() {
   );
 }
 
-export default MessagesPage;
+export default HomePage;

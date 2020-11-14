@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { isAuthSelector } from './store/selectors';
 import SignUpPage from './views/SignUpPage';
-import MessagesPage from './views/MessagesPage';
+import HomePage from './views/HomePage';
 
 function App() {
   const isAuth = useSelector(isAuthSelector);
@@ -16,7 +16,7 @@ function App() {
         </Route>
 
         <Route path="/messages">
-          {!isAuth ? <Redirect to="/" /> : <MessagesPage />}
+          {!isAuth ? <Redirect to="/" /> : <HomePage />}
         </Route>
       </Switch>
     </BrowserRouter>
