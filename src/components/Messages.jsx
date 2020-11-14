@@ -1,58 +1,29 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { userSelector } from '../store/selectors';
+import { useSubscribeConversation } from '../utils/utilsConversation';
 import MessageBubble from './MessageBubble';
 
 function Messages() {
+  const { convoUid } = useParams();
+  const user = useSelector(userSelector);
+
+  const [conversation, userList] = useSubscribeConversation(convoUid);
+
   return (
     <ul className="w-full md:w-2/3 lg:w-3/4 xl:w-4/5 h-screen overflow-y-auto p-3">
-      <li className="my-1">
-        <MessageBubble
-          name="Jean Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Marie Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf={false}
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Marie Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf={false}
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Marie Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf={false}
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Marie Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf={false}
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Jean Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf
-        />
-      </li>
-      <li className="my-1">
-        <MessageBubble
-          name="Marie Dupont"
-          message="Généralement, on utilise un texte en faux latin (le texte ne veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de faire office de texte d'attente. L'avantage de le mettre en latin est que l'opérateur sait au premier coup d'oeil que la page contenant ces lignes n'est pas valide, et surtout l'attention du client n'est pas dérangée par le contenu, il demeure concentré seulement sur l'aspect graphique."
-          isSelf={false}
-        />
-      </li>
+      {userList &&
+        conversation &&
+        conversation.map((msg) => (
+          <MessageBubble
+            key={msg.time}
+            name={userList[msg.exp]?.displayName ?? 'anonymous'}
+            message={msg.text}
+            isSelf={user.uid === msg.exp}
+          />
+        ))}
     </ul>
   );
 }

@@ -1,6 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import firebase from 'firebase/app';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { allUsersSelector } from '../store/selectors';
 
 /**
  * A partir de id conversation transmis
@@ -9,9 +11,12 @@ import { useState, useEffect } from 'react';
  * retourne la conversation
  */
 
-const subscribeConversation = (uidConvToShow = 'uidconv4') => {
+// ecouteur separé:  messages et userlist
+const useSubscribeConversation = (uidConvToShow = 'uidconv4') => {
+  const allUsers = useSelector(allUsersSelector);
   const [conversation, setConversation] = useState([]);
   const [userList, setUserList] = useState([]);
+  const [userListObject, setUserListObject] = useState([]);
 
   useEffect(() => {
     firebase
@@ -26,11 +31,18 @@ const subscribeConversation = (uidConvToShow = 'uidconv4') => {
       });
   }, []);
 
-  return [conversation, userList];
+  useEffect(() => {
+    console.log('here');
+    setUserListObject(
+      userList.reduce((acc, curr) => ({ ...acc, [curr]: allUsers[curr] }), {}),
+    );
+  }, [userList, allUsers]);
+
+  return [conversation, userListObject];
 };
 
 const unsubscribeConversation = (uidConvToShow = 'uidconv4') => {
   firebase.database().ref(`conversations/${uidConvToShow}`).off('value');
 };
 
-export { subscribeConversation, unsubscribeConversation };
+export { useSubscribeConversation, unsubscribeConversation };
