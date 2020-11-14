@@ -23,7 +23,7 @@ const subscribeContactsAction = () => (dispatch, getState) => {
 
       dispatch({
         type: UPDATE_CONTACTS,
-        payload: contacts,
+        payload: snapshot.val(),
       });
     });
 

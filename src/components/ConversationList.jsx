@@ -18,7 +18,7 @@ function ConversationList() {
       {conversationsList.map((convo) => {
         // First contact that isn't the current user
         const contactUid = convo.userList.find((uid) => uid !== user.uid);
-        const contact = contacts.find((c) => c.uid === contactUid);
+        const contact = contacts[contactUid];
 
         return (
           <li key={convo.uid_conv}>

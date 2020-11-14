@@ -1,41 +1,51 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { userSelector } from '../store/selectors';
-import { useSubscribeConversation } from '../utils/utilsConversation';
-import { createMessage } from '../utils/utilsFirebase';
+import { contactsSelector, userSelector } from '../store/selectors';
 import MessageBubble from './MessageBubble';
+import {
+  sendMessage,
+  subscribeConversationMessages,
+  subscribeConversationUserList,
+  unsubscribeConversation,
+} from '../utils/utilsFirebase';
 
 function Messages() {
   const { convoUid } = useParams();
   const user = useSelector(userSelector);
+  const contacts = useSelector(contactsSelector);
 
-  const [conversation, userList] = useSubscribeConversation(convoUid);
+  const [messages, setMessages] = useState(null);
+  const [usersList, setUsersList] = useState(null);
 
   const [newMsg, setNewMsg] = useState('');
-
   const handleChange = (e) => {
     setNewMsg(e.target.value);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newMsg || !newMsg.trim()) return;
-    createMessage(convoUid, user.uid, newMsg);
+    sendMessage(convoUid, user.uid, newMsg);
     setNewMsg('');
+    // fonction addUnread(usersList)
   };
+
+  useEffect(() => {
+    subscribeConversationMessages(setMessages, convoUid);
+    subscribeConversationUserList(setUsersList, convoUid);
+    return () => unsubscribeConversation(convoUid);
+  }, [convoUid]);
 
   return (
     <div className="w-full md:w-2/3 lg:w-3/4 xl:w-4/5 h-screen overflow-y-auto p-3">
       <ul>
-        {userList &&
-          conversation &&
-          conversation.map((msg) => (
+        {usersList &&
+          messages &&
+          messages.map((msg) => (
             <MessageBubble
               key={msg.time}
-              name={userList[msg.exp]?.displayName ?? 'anonymous'}
+              name={contacts[msg.exp].displayName}
               message={msg.text}
               isSelf={user.uid === msg.exp}
             />

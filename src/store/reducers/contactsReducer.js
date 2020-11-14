@@ -6,7 +6,7 @@ import {
 } from '../actions/actionTypes';
 
 export default function contactsReducer(
-  state = { contacts: [], subscriber: null },
+  state = { contacts: {}, subscriber: null },
   action,
 ) {
   switch (action.type) {
@@ -18,7 +18,7 @@ export default function contactsReducer(
 
     case UNSUBSCRIBE_CONTACTS: // Fallthrough
     case AUTH_SIGN_OUT:
-      return { contacts: [], subscriber: null };
+      return { contacts: {}, subscriber: null };
     default:
       return state;
   }

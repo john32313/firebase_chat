@@ -1,6 +1,36 @@
 import firebase from 'firebase/app';
 
-// a transformer en async
+/**
+ * A partir de id conversation transmis
+ * ecoute vers la conversation /conversations/uidconv
+ * trie les messages dans ordre de timestamp
+ * retourne la conversation
+ */
+
+const subscribeConversationMessages = (setMessages, uidConvToShow) => {
+  firebase
+    .database()
+    .ref(`conversations/${uidConvToShow}/messages`)
+    .on('value', (snapshot) => {
+      const result = snapshot.val();
+      const timeRangeByOrder = Object.keys(result).sort();
+      setMessages(timeRangeByOrder.map((time) => result[time]));
+    });
+};
+
+const subscribeConversationUserList = (setUsersList, uidConvToShow) => {
+  firebase
+    .database()
+    .ref(`conversations/${uidConvToShow}/userList`)
+    .on('value', (snapshot) => {
+      setUsersList(snapshot.val());
+    });
+};
+
+const unsubscribeConversation = (uidConvToShow = 'uidconv4') => {
+  firebase.database().ref(`conversations/${uidConvToShow}`).off('value');
+};
+
 const createConversation = (userList) => {
   const db = firebase.database();
   const newConvRef = db.ref('conversations').push();
@@ -24,7 +54,7 @@ const createConversation = (userList) => {
   return uidConv;
 };
 
-const createMessage = (uidConv, uidUser, msg) => {
+const sendMessage = (uidConv, uidUser, msg) => {
   const timestamp = firebase.database.ServerValue.TIMESTAMP;
   firebase.database().ref(`conversations/${uidConv}/messages`).push().set({
     text: msg,
@@ -33,4 +63,10 @@ const createMessage = (uidConv, uidUser, msg) => {
   });
 };
 
-export { createConversation, createMessage };
+export {
+  subscribeConversationMessages,
+  subscribeConversationUserList,
+  unsubscribeConversation,
+  createConversation,
+  sendMessage,
+};
