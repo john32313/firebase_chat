@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -22,6 +22,8 @@ function Messages() {
   const contacts = useSelector(contactsSelector);
   const usersList = useSelector(usersListConv(convoUid));
 
+  const refInput = useRef();
+
   const [messages, setMessages] = useState(null);
 
   const [newMsg, setNewMsg] = useState('');
@@ -42,6 +44,10 @@ function Messages() {
     return () => unsubscribeConversation(convoUid);
   }, [convoUid]);
 
+  useEffect(() => {
+    refInput.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <div className="w-full md:w-2/3 lg:w-3/4 xl:w-4/5 h-screen overflow-y-auto p-3">
       <ul>
@@ -60,6 +66,7 @@ function Messages() {
       <form onSubmit={handleSubmit} className="my-5">
         <label>
           <input
+            ref={refInput}
             value={newMsg}
             onChange={handleChange}
             type="text"
