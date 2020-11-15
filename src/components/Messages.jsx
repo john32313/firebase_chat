@@ -13,6 +13,7 @@ import {
   subscribeConversationMessages,
   pushUnreadUsersList,
   unsubscribeConversation,
+  popUnreadConv,
 } from '../utils/utilsFirebase';
 
 function Messages() {
@@ -37,6 +38,7 @@ function Messages() {
 
   useEffect(() => {
     subscribeConversationMessages(setMessages, convoUid);
+    popUnreadConv(convoUid, user.uid);
     return () => unsubscribeConversation(convoUid);
   }, [convoUid]);
 

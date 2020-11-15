@@ -73,6 +73,13 @@ const pushUnreadUsersList = (uidConv, usersList) => {
   });
 };
 
+const popUnreadConv = (uidConv, uidUser) => {
+  firebase
+    .database()
+    .ref(`conversationsList/${uidUser}/${uidConv}/unread`)
+    .set(0);
+};
+
 export {
   subscribeConversationMessages,
   subscribeConversationUserList,
@@ -80,4 +87,5 @@ export {
   createConversation,
   sendMessage,
   pushUnreadUsersList,
+  popUnreadConv,
 };
