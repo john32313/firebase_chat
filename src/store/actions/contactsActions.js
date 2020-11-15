@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import firebase from 'firebase/app';
 import {
   UPDATE_CONTACTS,
@@ -7,7 +6,6 @@ import {
 } from './actionTypes';
 
 const subscribeContactsAction = () => (dispatch, getState) => {
-  const { uid } = getState().user;
   const { subscriber } = getState().contacts;
 
   if (subscriber !== null) return;
@@ -16,11 +14,6 @@ const subscribeContactsAction = () => (dispatch, getState) => {
     .database()
     .ref('users')
     .on('value', (snapshot) => {
-      const contacts = Object.entries(snapshot.val()).reduce((acc, cur) => {
-        if (uid === cur[0]) return acc;
-        return [...acc, { uid: cur[0], ...cur[1] }];
-      }, []);
-
       dispatch({
         type: UPDATE_CONTACTS,
         payload: snapshot.val(),

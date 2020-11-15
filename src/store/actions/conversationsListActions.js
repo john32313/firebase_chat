@@ -13,14 +13,9 @@ const subscribeConversationsList = () => (dispatch, getState) => {
     .ref(`conversationsList/${uid}`)
     .on('value', (snapshot) => {
       if (!snapshot.val()) return;
-
-      const conversationsList = Object.entries(snapshot.val()).reduce(
-        (acc, cur) => [...acc, { uid_conv: cur[0], ...cur[1] }],
-        [],
-      );
       dispatch({
         type: UPDATE_CONVERSATIONS_LIST,
-        payload: conversationsList,
+        payload: snapshot.val(),
       });
     });
 

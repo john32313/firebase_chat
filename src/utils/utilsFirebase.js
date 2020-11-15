@@ -64,10 +64,20 @@ const sendMessage = (uidConv, uidUser, msg) => {
   });
 };
 
+const pushUnreadUsersList = (uidConv, usersList) => {
+  usersList.forEach((u) => {
+    firebase
+      .database()
+      .ref(`conversationsList/${u}/${uidConv}/unread`)
+      .set(firebase.database.ServerValue.increment(1));
+  });
+};
+
 export {
   subscribeConversationMessages,
   subscribeConversationUserList,
   unsubscribeConversation,
   createConversation,
   sendMessage,
+  pushUnreadUsersList,
 };

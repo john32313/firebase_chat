@@ -6,7 +6,7 @@ import {
 } from '../actions/actionTypes';
 
 const conversationsListReducer = (
-  state = { convList: [], subscriber: null },
+  state = { convList: {}, subscriber: null },
   action,
 ) => {
   switch (action.type) {

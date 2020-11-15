@@ -2,12 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { contactsSelector, userSelector } from '../store/selectors';
+import {
+  contactsSelector,
+  userSelector,
+  usersListConv,
+} from '../store/selectors';
 import MessageBubble from './MessageBubble';
 import {
   sendMessage,
   subscribeConversationMessages,
-  subscribeConversationUserList,
+  pushUnreadUsersList,
   unsubscribeConversation,
 } from '../utils/utilsFirebase';
 
@@ -15,9 +19,9 @@ function Messages() {
   const { convoUid } = useParams();
   const user = useSelector(userSelector);
   const contacts = useSelector(contactsSelector);
+  const usersList = useSelector(usersListConv(convoUid));
 
   const [messages, setMessages] = useState(null);
-  const [usersList, setUsersList] = useState(null);
 
   const [newMsg, setNewMsg] = useState('');
   const handleChange = (e) => {
@@ -28,12 +32,11 @@ function Messages() {
     if (!newMsg || !newMsg.trim()) return;
     sendMessage(convoUid, user.uid, newMsg);
     setNewMsg('');
-    // fonction addUnread(usersList)
+    pushUnreadUsersList(convoUid, usersList);
   };
 
   useEffect(() => {
     subscribeConversationMessages(setMessages, convoUid);
-    subscribeConversationUserList(setUsersList, convoUid);
     return () => unsubscribeConversation(convoUid);
   }, [convoUid]);
 
