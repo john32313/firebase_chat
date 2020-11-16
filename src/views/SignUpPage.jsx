@@ -1,13 +1,20 @@
 import React from 'react';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import SignIn from '../components/SignIn';
 
 function SignUpPage() {
   return (
-    <main className="container mx-auto h-screen flex justify-center items-center">
-      <div className="border-solid border-2 border-blue-300 bg-blue-200 rounded p-5">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      <Paper>
         <SignIn />
-      </div>
-    </main>
+      </Paper>
+    </Box>
   );
 }
 
