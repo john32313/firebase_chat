@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
+import List from '@material-ui/core/List';
 import {
   contactsSelector,
   conversationsListArraySelector,
   userSelector,
 } from '../store/selectors';
-import Contact from './Contact';
+import ConversationListItem from './ConversationListItem';
 
 function ConversationList() {
   const user = useSelector(userSelector);
@@ -14,25 +14,22 @@ function ConversationList() {
   const conversationsList = useSelector(conversationsListArraySelector);
 
   return (
-    <ul className="divide-y-2 divide-opacity-50 divide-red-600 bg-red-200 border-r-2 border-red-600 w-full md:w-1/3 lg:w-1/4 xl:w-1/5 h-screen overflow-y-auto p-2">
+    <List>
       {conversationsList.map((convo) => {
-        // First contact that isn't the current user
-        const contactUid = convo.userList.find((uid) => uid !== user.uid);
-        const contact = contacts[contactUid];
+        const contact = convo.userList
+          .filter((uid) => uid !== user.uid) // Exclude self from contact list
+          .map((uid) => contacts[uid]);
 
         return (
-          <li key={convo.uid_conv}>
-            <Contact
-              name={contact.displayName}
-              image={contact.photoURL}
-              isOnline={contact.isOnline}
-              unreadCount={convo.unread}
-              link={`/messages/${convo.uid_conv}`}
-            />
-          </li>
+          <ConversationListItem
+            key={convo.uid_conv}
+            users={contact}
+            unreadCount={convo.unread}
+            link={`/messages/${convo.uid_conv}`}
+          />
         );
       })}
-    </ul>
+    </List>
   );
 }
 
