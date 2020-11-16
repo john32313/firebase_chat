@@ -6,6 +6,7 @@ import {
   contactsSelector,
   userSelector,
   usersListConv,
+  unreadConv,
 } from '../store/selectors';
 import MessageBubble from './MessageBubble';
 import {
@@ -21,6 +22,7 @@ function Messages() {
   const user = useSelector(userSelector);
   const contacts = useSelector(contactsSelector);
   const usersList = useSelector(usersListConv(convoUid));
+  const unread = useSelector(unreadConv(convoUid));
 
   const refInput = useRef();
 
@@ -47,6 +49,10 @@ function Messages() {
   useEffect(() => {
     refInput.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    popUnreadConv(convoUid, user.uid);
+  }, [unread, convoUid]);
 
   return (
     <div className="w-full md:w-2/3 lg:w-3/4 xl:w-4/5 h-screen overflow-y-auto p-3">
