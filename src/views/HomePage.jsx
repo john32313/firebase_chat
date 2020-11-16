@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles } from '@material-ui/core';
+import {
+  withStyles,
+  Box,
+  Paper,
+  Grid,
+  AppBar,
+  Toolbar,
+} from '@material-ui/core';
 import Messages from '../components/Messages';
 import SignOut from '../components/SignOut';
 import ConversationList from '../components/ConversationList';

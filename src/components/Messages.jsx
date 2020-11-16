@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import {
+  Container,
+  Box,
+  Paper,
+  TextField,
+  InputAdornment,
+} from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import {
   contactsSelector,

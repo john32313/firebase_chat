@@ -1,11 +1,13 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import {
+  Card,
+  CardHeader,
+  Box,
+  Avatar,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 
 function MessageCard({ name, image, message, isSelf }) {
   return (

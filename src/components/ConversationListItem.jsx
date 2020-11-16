@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
 import propTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 import MessageIcon from '@material-ui/icons/Message';
+
+import {
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemIcon,
+  Avatar,
+  Badge,
+} from '@material-ui/core';
 
 const styledBy = (property, mapping) => (props) => mapping[props[property]];
 

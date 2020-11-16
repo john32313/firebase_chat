@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
 import { signOutAction } from '../store/actions';
 import { userSelector } from '../store/selectors';
 
