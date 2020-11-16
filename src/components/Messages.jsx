@@ -1,13 +1,18 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SendIcon from '@material-ui/icons/Send';
 import {
   contactsSelector,
   userSelector,
   usersListConv,
 } from '../store/selectors';
-import MessageBubble from './MessageBubble';
+import MessageCard from './MessageCard';
 import {
   sendMessage,
   subscribeConversationMessages,
@@ -22,7 +27,7 @@ function Messages() {
   const contacts = useSelector(contactsSelector);
   const usersList = useSelector(usersListConv(convoUid));
 
-  const refInput = useRef();
+  const scrollRef = useRef();
 
   const [messages, setMessages] = useState(null);
 
@@ -45,39 +50,54 @@ function Messages() {
   }, [convoUid]);
 
   useEffect(() => {
-    refInput.current.scrollIntoView({ behavior: 'smooth' });
+    scrollRef.current.scroll(0, scrollRef.current.scrollHeight);
   }, [messages]);
 
   return (
-    <div className="w-full md:w-2/3 lg:w-3/4 xl:w-4/5 h-screen overflow-y-auto p-3">
-      <ul>
-        {usersList &&
-          messages &&
-          messages.map((msg) => (
-            <MessageBubble
-              key={msg.time}
-              name={contacts[msg.exp].displayName}
-              message={msg.text}
-              isSelf={user.uid === msg.exp}
-            />
-          ))}
-      </ul>
+    <Box display="flex" flexDirection="column" height="calc(100vh - 64px)">
+      <Box flexGrow="1" height="100%" overflow="auto" ref={scrollRef}>
+        <Container fixed maxWidth="md">
+          {usersList &&
+            messages &&
+            messages.map((msg) => (
+              <MessageCard
+                key={msg.time}
+                name={contacts[msg.exp].displayName}
+                image={contacts[msg.exp].photoURL}
+                message={msg.text}
+                isSelf={user.uid === msg.exp}
+              />
+            ))}
+        </Container>
+      </Box>
 
-      <form onSubmit={handleSubmit} className="my-5">
-        <label>
-          <input
-            ref={refInput}
+      <Paper
+        elevation={0}
+        square
+        component="form"
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <Box p="0.5rem">
+          <TextField
+            id="message-input"
+            label="Message"
+            rowsMax={4}
+            fullWidth
+            variant="filled"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SendIcon />
+                </InputAdornment>
+              ),
+            }}
             value={newMsg}
             onChange={handleChange}
-            type="text"
-            name="msg"
-            id="msg"
-            className="mt-1 p-4 form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-            placeholder="Enter your message"
           />
-        </label>
-      </form>
-    </div>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

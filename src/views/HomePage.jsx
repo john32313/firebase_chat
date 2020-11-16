@@ -52,7 +52,7 @@ function HomePage() {
 
       <Grid container>
         <Grid item md={3}>
-          <FullHeightPaper>
+          <FullHeightPaper elevation={4}>
             <ConversationList />
           </FullHeightPaper>
         </Grid>
