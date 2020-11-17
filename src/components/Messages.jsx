@@ -14,13 +14,14 @@ import {
   contactsSelector,
   userSelector,
   usersListConv,
+  unreadConv,
 } from '../store/selectors';
 import MessageCard from './MessageCard';
 import {
   sendMessage,
   subscribeConversationMessages,
   pushUnreadUsersList,
-  unsubscribeConversation,
+  unsubscribeConversationMessages,
   popUnreadConv,
 } from '../utils/utilsFirebase';
 
@@ -29,6 +30,7 @@ function Messages({ messagesClassName, inputClassName }) {
   const user = useSelector(userSelector);
   const contacts = useSelector(contactsSelector);
   const usersList = useSelector(usersListConv(convoUid));
+  const unread = useSelector(unreadConv(convoUid));
 
   const scrollRef = useRef();
 
@@ -49,12 +51,16 @@ function Messages({ messagesClassName, inputClassName }) {
   useEffect(() => {
     subscribeConversationMessages(setMessages, convoUid);
     popUnreadConv(convoUid, user.uid);
-    return () => unsubscribeConversation(convoUid);
+    return () => unsubscribeConversationMessages(convoUid);
   }, [convoUid]);
 
   useEffect(() => {
     scrollRef.current.scroll(0, scrollRef.current.scrollHeight);
   }, [messages]);
+
+  useEffect(() => {
+    popUnreadConv(convoUid, user.uid);
+  }, [unread]);
 
   return (
     <>

@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import AddIcon from '@material-ui/icons/Add';
 import {
   Button,
@@ -19,7 +21,7 @@ import {
 } from '@material-ui/core';
 import { contactsSelector } from '../store/selectors';
 
-function AddConversationButton() {
+function AddConversationButton({ handleNewConv }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [userIds, setUserIds] = useState([]);
 
@@ -35,6 +37,8 @@ function AddConversationButton() {
 
   const handleAddConversation = () => {
     setOpenDialog(false);
+    handleNewConv(userIds);
+    setUserIds([]);
   };
 
   const selectRenderValueChips = useCallback(
@@ -112,5 +116,9 @@ function AddConversationButton() {
     </>
   );
 }
+
+AddConversationButton.propTypes = {
+  handleNewConv: PropTypes.func.isRequired,
+};
 
 export default AddConversationButton;

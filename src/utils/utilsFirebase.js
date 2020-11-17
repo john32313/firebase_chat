@@ -13,23 +13,20 @@ const subscribeConversationMessages = (setMessages, uidConvToShow) => {
     .ref(`conversations/${uidConvToShow}/messages`)
     .on('value', (snapshot) => {
       const result = snapshot.val();
-      if (!result) return;
+      if (!result) {
+        setMessages([]);
+        return;
+      }
       const timeRangeByOrder = Object.keys(result).sort();
       setMessages(timeRangeByOrder.map((time) => result[time]));
     });
 };
 
-const subscribeConversationUserList = (setUsersList, uidConvToShow) => {
+const unsubscribeConversationMessages = (uidConvToShow = 'uidconv4') => {
   firebase
     .database()
-    .ref(`conversations/${uidConvToShow}/userList`)
-    .on('value', (snapshot) => {
-      setUsersList(snapshot.val());
-    });
-};
-
-const unsubscribeConversation = (uidConvToShow = 'uidconv4') => {
-  firebase.database().ref(`conversations/${uidConvToShow}`).off('value');
+    .ref(`conversations/${uidConvToShow}/messages`)
+    .off('value');
 };
 
 const createConversation = (userList) => {
@@ -82,8 +79,7 @@ const popUnreadConv = (uidConv, uidUser) => {
 
 export {
   subscribeConversationMessages,
-  subscribeConversationUserList,
-  unsubscribeConversation,
+  unsubscribeConversationMessages,
   createConversation,
   sendMessage,
   pushUnreadUsersList,
