@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { List, Divider } from '@material-ui/core';
 import {
@@ -21,15 +21,14 @@ function ConversationList() {
           .map((uid) => contacts[uid]);
 
         return (
-          <>
+          <Fragment key={convo.uid_conv}>
             <ConversationListItem
-              key={convo.uid_conv}
               users={contact}
               unreadCount={convo.unread}
               link={`/messages/${convo.uid_conv}`}
             />
             {i !== conversationsList.length - 1 && <Divider component="li" />}
-          </>
+          </Fragment>
         );
       })}
     </List>
