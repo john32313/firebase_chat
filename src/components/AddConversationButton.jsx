@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import AddIcon from '@material-ui/icons/Add';
 import {
   Button,
@@ -19,13 +18,14 @@ import {
   Chip,
   Box,
 } from '@material-ui/core';
-import { contactsSelector } from '../store/selectors';
+import { contactsSelector, userSelector } from '../store/selectors';
 
 function AddConversationButton({ handleNewConv }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [userIds, setUserIds] = useState([]);
 
   const contacts = useSelector(contactsSelector);
+  const user = useSelector(userSelector);
 
   const handleOpen = () => {
     setOpenDialog(true);
@@ -89,17 +89,19 @@ function AddConversationButton({ handleNewConv }) {
                   setUserIds(e.target.value);
                 }}
               >
-                {Object.entries(contacts).map(([uid, contact]) => (
-                  <MenuItem key={uid} value={uid}>
-                    <ListItemAvatar>
-                      <Avatar
-                        src={contact.photoURL}
-                        alt={contact.displayName}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText>{contact.displayName}</ListItemText>
-                  </MenuItem>
-                ))}
+                {Object.entries(contacts)
+                  .filter(([uid]) => uid !== user.uid)
+                  .map(([uid, contact]) => (
+                    <MenuItem key={uid} value={uid}>
+                      <ListItemAvatar>
+                        <Avatar
+                          src={contact.photoURL}
+                          alt={contact.displayName}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText>{contact.displayName}</ListItemText>
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </form>
