@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import propTypes from 'prop-types';
 import {
   Container,
   Box,
@@ -23,7 +24,7 @@ import {
   popUnreadConv,
 } from '../utils/utilsFirebase';
 
-function Messages() {
+function Messages({ messagesClassName, inputClassName }) {
   const { convoUid } = useParams();
   const user = useSelector(userSelector);
   const contacts = useSelector(contactsSelector);
@@ -56,12 +57,11 @@ function Messages() {
   }, [messages]);
 
   return (
-    <Box display="flex" flexDirection="column" height="calc(100vh - 64px)">
-      <Box flexGrow="1" height="100%" overflow="auto" ref={scrollRef}>
-        <Container fixed maxWidth="md">
-          {usersList &&
-            messages &&
-            messages.map((msg) => (
+    <>
+      <Box className={messagesClassName} overflow="auto" ref={scrollRef}>
+        {usersList && messages && (
+          <Container fixed maxWidth="md">
+            {messages.map((msg) => (
               <MessageCard
                 key={msg.time}
                 name={contacts[msg.exp].displayName}
@@ -70,10 +70,12 @@ function Messages() {
                 isSelf={user.uid === msg.exp}
               />
             ))}
-        </Container>
+          </Container>
+        )}
       </Box>
 
       <Paper
+        className={inputClassName}
         elevation={0}
         square
         component="form"
@@ -99,8 +101,12 @@ function Messages() {
           />
         </Box>
       </Paper>
-    </Box>
+    </>
   );
 }
+Messages.propTypes = {
+  messagesClassName: propTypes.string.isRequired,
+  inputClassName: propTypes.string.isRequired,
+};
 
 export default Messages;
