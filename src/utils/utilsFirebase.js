@@ -13,7 +13,10 @@ const subscribeConversationMessages = (setMessages, uidConvToShow) => {
     .ref(`conversations/${uidConvToShow}/messages`)
     .on('value', (snapshot) => {
       const result = snapshot.val();
-      if (!result) return;
+      if (!result) {
+        setMessages([]);
+        return;
+      }
       const timeRangeByOrder = Object.keys(result).sort();
       setMessages(timeRangeByOrder.map((time) => result[time]));
     });

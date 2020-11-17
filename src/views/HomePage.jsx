@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Route, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   withStyles,
   Box,
@@ -19,6 +19,8 @@ import {
   unsubscribeContactsAction,
   unsubscribeConversationsList,
 } from '../store/actions';
+import { userSelector } from '../store/selectors';
+import { createConversation } from '../utils/utilsFirebase';
 
 const FullHeightPaper = withStyles(() => ({
   root: {
@@ -27,9 +29,15 @@ const FullHeightPaper = withStyles(() => ({
   },
 }))(Paper);
 
-// maybe rename this page/component ?
 function HomePage() {
   const dispatch = useDispatch();
+  const user = useSelector(userSelector);
+  const history = useHistory();
+
+  const handleNewConv = (userIds) => {
+    const convoUid = createConversation([...userIds, user.uid]);
+    history.push(`/messages/${convoUid}`);
+  };
 
   useEffect(() => {
     dispatch(subscribeContactsAction());
@@ -45,7 +53,7 @@ function HomePage() {
     <Box component="main" height="100vh" display="flex" flexDirection="column">
       <AppBar position="static">
         <Toolbar>
-          <AddConversationButton />
+          <AddConversationButton handleNewConv={handleNewConv} />
           <Box ml="auto">
             <SignOut />
           </Box>
