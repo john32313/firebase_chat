@@ -1,14 +1,31 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import {
+  withStyles,
+  Box,
+  Paper,
+  Grid,
+  AppBar,
+  Toolbar,
+} from '@material-ui/core';
 import Messages from '../components/Messages';
+import SignOut from '../components/SignOut';
 import ConversationList from '../components/ConversationList';
+import AddConversationButton from '../components/AddConversationButton';
 import {
   subscribeContactsAction,
   subscribeConversationsList,
   unsubscribeContactsAction,
   unsubscribeConversationsList,
 } from '../store/actions';
+
+const FullHeightPaper = withStyles(() => ({
+  root: {
+    height: 'calc(100vh - 64px)',
+    overflowY: 'auto',
+  },
+}))(Paper);
 
 // maybe rename this page/component ?
 function HomePage() {
@@ -25,12 +42,29 @@ function HomePage() {
   }, []);
 
   return (
-    <main className="flex">
-      <ConversationList />
-      <Route path="/messages/:convoUid">
-        <Messages />
-      </Route>
-    </main>
+    <Box component="main" height="100vh" display="flex" flexDirection="column">
+      <AppBar position="static">
+        <Toolbar>
+          <AddConversationButton />
+          <Box ml="auto">
+            <SignOut />
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      <Grid container>
+        <Grid item md={3}>
+          <FullHeightPaper elevation={4}>
+            <ConversationList />
+          </FullHeightPaper>
+        </Grid>
+        <Grid item md={9}>
+          <Route path="/messages/:convoUid">
+            <Messages />
+          </Route>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 
