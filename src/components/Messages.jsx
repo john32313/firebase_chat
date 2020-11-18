@@ -25,7 +25,7 @@ import {
   popUnreadConv,
 } from '../utils/utilsFirebase';
 
-function Messages({ messagesClassName, inputClassName }) {
+function Messages({ classes }) {
   const { convoUid } = useParams();
   const user = useSelector(userSelector);
   const contacts = useSelector(contactsSelector);
@@ -64,7 +64,7 @@ function Messages({ messagesClassName, inputClassName }) {
 
   return (
     <>
-      <Box className={messagesClassName} overflow="auto" ref={scrollRef}>
+      <Box className={classes.messages} overflow="auto" ref={scrollRef}>
         {usersList && messages && (
           <Container fixed maxWidth="md">
             {messages.map((msg) => (
@@ -81,7 +81,7 @@ function Messages({ messagesClassName, inputClassName }) {
       </Box>
 
       <Paper
-        className={inputClassName}
+        className={classes.input}
         elevation={0}
         square
         component="form"
@@ -111,8 +111,16 @@ function Messages({ messagesClassName, inputClassName }) {
   );
 }
 Messages.propTypes = {
-  messagesClassName: propTypes.string.isRequired,
-  inputClassName: propTypes.string.isRequired,
+  classes: propTypes.shape({
+    messages: propTypes.string,
+    input: propTypes.string,
+  }),
+};
+Messages.defaultProps = {
+  classes: {
+    messages: '',
+    input: '',
+  },
 };
 
 export default Messages;
