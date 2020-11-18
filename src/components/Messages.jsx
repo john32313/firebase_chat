@@ -73,6 +73,7 @@ function Messages({ classes }) {
                 name={contacts[msg.exp].displayName}
                 image={contacts[msg.exp].photoURL}
                 message={msg.text}
+                date={new Date(msg.time)}
                 isSelf={user.uid === msg.exp}
               />
             ))}

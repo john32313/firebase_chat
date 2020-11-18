@@ -5,6 +5,7 @@ dependencies:
   '@testing-library/jest-dom': 5.11.5
   '@testing-library/react': 11.1.1_react-dom@17.0.1+react@17.0.1
   '@testing-library/user-event': 12.2.0
+  date-fns: 2.16.1
   firebase: 8.0.1
   firebaseui: 4.7.1_firebase@8.0.1
   prop-types: 15.7.2
@@ -4625,6 +4626,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-X5eWTSXO/BJmpdIKCRuKUgSCgAN0OwliVK3yPKbwIWU1Tdw5BRajxlzMidvh+gwko9AfQ9zIj52pzF91Q3YAvQ==
+  /date-fns/2.16.1:
+    dev: false
+    engines:
+      node: '>=0.11'
+    resolution:
+      integrity: sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -13253,6 +13260,7 @@ specifiers:
   '@testing-library/jest-dom': ^5.11.4
   '@testing-library/react': ^11.1.0
   '@testing-library/user-event': ^12.1.10
+  date-fns: ^2.16.1
   eslint: 7.13.0
   eslint-config-airbnb: ^18.2.0
   eslint-config-prettier: ^6.14.0
