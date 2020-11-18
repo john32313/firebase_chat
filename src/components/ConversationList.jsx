@@ -25,7 +25,7 @@ function ConversationList() {
             <ConversationListItem
               users={contact}
               unreadCount={convo.unread}
-              link={`/messages/${convo.uid_conv}`}
+              link={`/conversations/${convo.uid_conv}`}
             />
             {i !== conversationsList.length - 1 && <Divider component="li" />}
           </Fragment>

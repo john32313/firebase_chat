@@ -58,7 +58,7 @@ function HomePage() {
   const handleNewConv = (userIds) => {
     let convoUid = checkConvExist(conversationsList, userIds);
     if (!convoUid) convoUid = createConversation([...userIds, user.uid]);
-    history.push(`/messages/${convoUid}`);
+    history.push(`/conversations/${convoUid}`);
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ function HomePage() {
         <ConversationList />
       </Paper>
 
-      <Route path="/messages/:convoUid">
+      <Route path="/conversations/:convoUid">
         <Messages
           messagesClassName={classes.messages}
           inputClassName={classes.input}

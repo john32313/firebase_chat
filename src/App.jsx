@@ -12,10 +12,10 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          {isAuth ? <Redirect to="/messages" /> : <SignUpPage />}
+          {isAuth ? <Redirect to="/conversations" /> : <SignUpPage />}
         </Route>
 
-        <Route path="/messages">
+        <Route path="/conversations">
           {!isAuth ? <Redirect to="/" /> : <HomePage />}
         </Route>
       </Switch>
