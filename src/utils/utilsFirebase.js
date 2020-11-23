@@ -39,13 +39,15 @@ const createConversation = (userList) => {
   } = newConvRef;
 
   newConvRef.set({
-    userList,
+    userList: userList.reduce((obj, user) => ({ ...obj, [user]: user }), {}), // Keys containing user id for security rules
     messages: [],
   });
 
   userList.forEach((curr) => {
     db.ref(`conversationsList/${curr}/${uidConv}`).set({
-      userList: userList.filter((u) => u !== curr),
+      userList: userList
+        .filter((u) => u !== curr)
+        .reduce((obj, user) => ({ ...obj, [user]: user }), {}), // Keys containing user id for security rules
       unread: 0,
     });
   });

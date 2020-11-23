@@ -1,6 +1,27 @@
 {
   "rules": {
-    ".read": "now < 1607727600000",  // 2020-12-12
-    ".write": "now < 1607727600000",  // 2020-12-12
+    "users": {
+      ".read": true,
+
+      "$uid": {
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "conversationsList": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+
+        "$convoId": {
+          ".read": "$uid === auth.uid || data.child('userList').hasChild(auth.uid)",
+          ".write": "$uid === auth.uid || newData.child('userList').hasChild(auth.uid)"
+        }
+      }
+    },
+    "conversations": {
+      "$convId": {
+        ".read": "data.child('userList').hasChild(auth.uid)",
+        ".write": "newData.child('userList').hasChild(auth.uid)"
+      }
+    }
   }
 }
