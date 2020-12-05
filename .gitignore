@@ -30,3 +30,5 @@ src/css/dist.css
 
 # firebase
 .firebase
+rules
+chat-98085-export.json
